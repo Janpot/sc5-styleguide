@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Mon Oct 13 2014 13:30:11 GMT+0300 (EEST)
-
 module.exports = function(config) {
   config.set({
 
@@ -15,7 +12,7 @@ module.exports = function(config) {
     files: [
       // components
       'lib/app/js/components/angular/angular.js',
-      'lib/app/js/components/ui-router/release/angular-ui-router.js',
+      'lib/app/js/components/angular-ui-router/release/angular-ui-router.js',
       'lib/app/js/components/angular-animate/angular-animate.js',
       'lib/app/js/components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js',
       'lib/app/js/components/angular-local-storage/dist/angular-local-storage.js',
@@ -23,19 +20,20 @@ module.exports = function(config) {
       'lib/app/js/components/angular-highlightjs/angular-highlightjs.js',
       'lib/app/js/components/oclazyload/dist/ocLazyLoad.js',
       'lib/app/js/components/angular-mocks/angular-mocks.js',
-      'lib/app/js/components/ngprogress/build/ngProgress.js',
+      'lib/app/js/components/ngprogress/build/ngprogress.js',
+      'lib/app/js/components/angular-debounce/dist/angular-debounce.js',
+      'lib/app/js/components/angular-scroll/angular-scroll.js',
+      'lib/app/js/components/lodash/lodash.js',
+      'lib/app/js/components/custom-event/index.js',
       // application code
-        'lib/app/js/*.js',
+      'lib/app/js/*.js',
       'lib/app/js/controllers/*.js',
       'lib/app/js/directives/*.js',
       'lib/app/js/services/*.js',
       // tests
-      'test/angular/**/*.js'
-    ],
-
-    // list of files to exclude
-    exclude: [
-      'test/structure.js'
+      'test/angular/**/*.js',
+      // application view templates
+      { pattern: 'lib/app/views/**/*.html', included: false }
     ],
 
     // preprocess matching files before serving them to the browser
@@ -66,7 +64,10 @@ module.exports = function(config) {
       subdir: '.',
       reporters: [
         { type: 'json',
-          file: 'functional-coverage.json'
+          file: 'angular-unit-coverage.json'
+        },
+        { type: 'text',
+          file: null
         }
       ]
     },
@@ -92,4 +93,11 @@ module.exports = function(config) {
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
   });
+
+  config.set({
+    proxies: {
+        '/view/': 'http://localhost:' + config.port + '/base/lib/app/views/'
+    }
+  });
+
 };
